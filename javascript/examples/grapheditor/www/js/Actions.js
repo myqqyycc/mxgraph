@@ -1302,6 +1302,14 @@ Actions.prototype.init = function()
 	
 	action.setToggleAction(true);
 	action.setSelectedCallback(mxUtils.bind(this, function() { return this.outlineWindow != null && this.outlineWindow.window.isVisible(); }));
+
+
+
+	//添加自己的action
+    // this.addAction('保存', , '保存', 'unorderedlist', '');
+    this.put("保存", new Action("保存", function() {
+        alert((new XMLSerializer()).serializeToString(editorUi.editor.getGraphXml()));
+    }, true, '', null));
 };
 
 /**

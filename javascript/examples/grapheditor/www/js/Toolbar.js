@@ -114,11 +114,6 @@ Toolbar.prototype.init = function()
 		var elts = this.addItems(['-', 'delete']);
 		elts[1].setAttribute('title', mxResources.get('delete') + ' (' + this.editorUi.actions.get('delete').shortcut + ')');
 	}
-	
-	if (sw >= 550)
-	{
-		this.addItems(['-', 'toFront', 'toBack']);
-	}
 
 	if (sw >= 740)
 	{
@@ -128,29 +123,16 @@ Toolbar.prototype.init = function()
 		{
 			this.addItems(['strokeColor']);
 			
-			if (sw >= 820)
-			{
-				this.addItems(['shadow']);
-			}
+			// if (sw >= 820)
+			// {
+			// 	this.addItems(['shadow']);
+			// }
 		}
 	}
 	
 	if (sw >= 400)
 	{
 		this.addSeparator();
-		
-		if (sw >= 440)
-		{
-			this.edgeShapeMenu = this.addMenuFunction('', mxResources.get('connection'), false, mxUtils.bind(this, function(menu)
-			{
-				this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_SHAPE, 'width'], [null, null], 'geIcon geSprite geSprite-connection', null, true).setAttribute('title', mxResources.get('line'));
-				this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_SHAPE, 'width'], ['link', null], 'geIcon geSprite geSprite-linkedge', null, true).setAttribute('title', mxResources.get('link'));
-				this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_SHAPE, 'width'], ['flexArrow', null], 'geIcon geSprite geSprite-arrow', null, true).setAttribute('title', mxResources.get('arrow'));
-				this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_SHAPE, 'width'], ['arrow', null], 'geIcon geSprite geSprite-simplearrow', null, true).setAttribute('title', mxResources.get('simpleArrow'));
-			}));
-	
-			this.addDropDownArrow(this.edgeShapeMenu, 'geSprite-connection', 44, 50, 0, 0, 22, -4);
-		}
 	
 		this.edgeStyleMenu = this.addMenuFunction('geSprite-orthogonal', mxResources.get('waypoints'), false, mxUtils.bind(this, function(menu)
 		{
@@ -168,9 +150,12 @@ Toolbar.prototype.init = function()
 	}
 
 	this.addSeparator();
-
-	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
-	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
+    // this.addItems(['保存']);
+    var saveButton=this.addItem('.geSprite-justifyfull', '保存')
+    saveButton.innerHTML="保存";
+    saveButton.style="width:30px"
+	// var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
+	// this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
 };
 
 /**

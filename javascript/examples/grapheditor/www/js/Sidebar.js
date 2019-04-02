@@ -79,25 +79,25 @@ Sidebar.prototype.init = function()
 {
 	var dir = STENCIL_PATH;
 	
-	this.addSearchPalette(true);
-	this.addGeneralPalette(true);
-	this.addMiscPalette(false);
-	this.addAdvancedPalette(false);
-	this.addBasicPalette(dir);
-	this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
-		';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
-	this.addUmlPalette(false);
-	this.addBpmnPalette(dir, false);
-	this.addStencilPalette('flowchart', 'Flowchart', dir + '/flowchart.xml',
-		';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
-	this.addImagePalette('clipart', mxResources.get('clipart'), dir + '/clipart/', '_128x128.png',
-		['Earth_globe', 'Empty_Folder', 'Full_Folder', 'Gear', 'Lock', 'Software', 'Virus', 'Email',
-		 'Database', 'Router_Icon', 'iPad', 'iMac', 'Laptop', 'MacBook', 'Monitor_Tower', 'Printer',
-		 'Server_Tower', 'Workstation', 'Firewall_02', 'Wireless_Router_N', 'Credit_Card',
-		 'Piggy_Bank', 'Graph', 'Safe', 'Shopping_Cart', 'Suit1', 'Suit2', 'Suit3', 'Pilot1',
-		 'Worker1', 'Soldier1', 'Doctor1', 'Tech1', 'Security1', 'Telesales1'], null,
-		 {'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
-		  'Router_Icon': 'router switch'});
+	// this.addSearchPalette(true);
+	// this.addGeneralPalette(true);
+
+    this.addDiyPalette(true);
+	// this.addMiscPalette(false);
+	// this.addAdvancedPalette(false);
+	// this.addBasicPalette(dir);
+	// this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
+	// 	';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
+	// this.addUmlPalette(false);
+	// this.addBpmnPalette(dir, false);
+	// this.addImagePalette('clipart', mxResources.get('clipart'), dir + '/clipart/', '_128x128.png',
+	// 	['Earth_globe', 'Empty_Folder', 'Full_Folder', 'Gear', 'Lock', 'Software', 'Virus', 'Email',
+	// 	 'Database', 'Router_Icon', 'iPad', 'iMac', 'Laptop', 'MacBook', 'Monitor_Tower', 'Printer',
+	// 	 'Server_Tower', 'Workstation', 'Firewall_02', 'Wireless_Router_N', 'Credit_Card',
+	// 	 'Piggy_Bank', 'Graph', 'Safe', 'Shopping_Cart', 'Suit1', 'Suit2', 'Suit3', 'Pilot1',
+	// 	 'Worker1', 'Soldier1', 'Doctor1', 'Tech1', 'Security1', 'Telesales1'], null,
+	// 	 {'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
+	// 	  'Router_Icon': 'router switch'});
 };
 
 /**
@@ -3603,4 +3603,25 @@ Sidebar.prototype.destroy = function()
 		mxEvent.removeListener(document, (mxClient.IS_POINTER) ? 'pointerout' : 'mouseout', this.pointerOutHandler);
 		this.pointerOutHandler = null;
 	}
+};
+Sidebar.prototype.addDiyPalette = function(expand)
+{
+    var lineTags = 'line lines connector connectors connection connections arrow arrows ';
+
+    var fns = [
+
+        this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', '节点', null, null, 'rounded rect rectangle box'),
+        this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;', 80, 80, '', 'Circle', null, null, '结束节点'),
+
+        this.createVertexTemplateEntry('triangle;whiteSpace=wrap;html=1;', 60, 80, '', 'Triangle', null, null, 'triangle logic inverter buffer'),
+        this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;', 80, 100, '', 'Note'),
+
+        this.createEdgeTemplateEntry('shape=link;html=1;', 50, 50, '', 'Link', null, lineTags + 'link'),
+        this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
+        this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
+        this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
+        this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed')
+    ];
+
+    this.addPaletteFunctions('general', mxResources.get('general'), (expand != null) ? expand : true, fns);
 };

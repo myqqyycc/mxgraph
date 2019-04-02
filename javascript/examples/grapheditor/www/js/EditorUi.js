@@ -959,7 +959,7 @@ EditorUi.prototype.splitSize = (mxClient.IS_TOUCH || mxClient.IS_POINTER) ? 12 :
 /**
  * Specifies the height of the menubar. Default is 34.
  */
-EditorUi.prototype.menubarHeight = 30;
+EditorUi.prototype.menubarHeight = 0;
 
 /**
  * Specifies the width of the format panel should be enabled. Default is true.
@@ -3111,7 +3111,7 @@ EditorUi.prototype.createUi = function()
 {
 	// Creates menubar
 	this.menubar = (this.editor.chromeless) ? null : this.menus.createMenubar(this.createDiv('geMenubar'));
-	
+
 	if (this.menubar != null)
 	{
 		this.menubarContainer.appendChild(this.menubar.container);
@@ -3132,7 +3132,7 @@ EditorUi.prototype.createUi = function()
 		this.menubar.container.appendChild(this.statusContainer);
 		
 		// Inserts into DOM
-		this.container.appendChild(this.menubarContainer);
+		// this.container.appendChild(this.menubarContainer);
 	}
 
 	// Creates the sidebar
@@ -3240,7 +3240,7 @@ EditorUi.prototype.createSidebar = function(container)
  */
 EditorUi.prototype.createFormat = function(container)
 {
-	return new Format(this, container);
+	// return new Format(this, container);
 };
 
 /**
