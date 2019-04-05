@@ -13,7 +13,6 @@
     <script type="text/javascript">
         mxBasePath = '/page/src';
     </script>
-
     <!-- Loads and initializes the library -->
     <script type="text/javascript" src="/page/src/js/mxClient.js"></script>
     <script type="text/javascript" src="js/Graph.js"></script>
@@ -32,23 +31,13 @@
                 var xmlDocument = mxUtils.parseXml(xml);
                 var decoder = new mxCodec(xmlDocument);
                 var node = xmlDocument.documentElement;
-
                 graph = new mxGraph(container);
-
-//                graph.insertEdge(parent, null, '', null, null, 'edgeStyle=orthogonalEdgeStyle;');
+                decoder.decode(mxUtils.load('/page/examples/grapheditor/www/styles/default.xml').getDocumentElement(), graph.getStylesheet());
 
                 graph.centerZoom = false;
                 graph.setTooltips(false);
                 graph.setEnabled(false);
 
-                // Changes the default style for edges "in-place"
-                var style = graph.getStylesheet().getDefaultEdgeStyle();
-//                style[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector;
-                style[mxConstants.STYLE_ROUNDED] = false;//圆角连线
-                style[mxConstants.STYLE_EDGE] = 'orthogonalEdgeStyle';
-                style[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
-                style[mxConstants.PERIMETER_TRIANGLE] = mxPerimeter.TrianglePerimeter;
-//                triangle
                 // Enables panning with left mouse button
                 graph.panningHandler.useLeftButtonForPanning = true;
                 graph.panningHandler.ignoreCell = true;
@@ -58,71 +47,6 @@
 
                 decoder.decode(node, graph.getModel());
                 graph.resizeContainer = false;
-
-                // Adds zoom buttons in top, left corner
-                var buttons = document.createElement('div');
-                buttons.style.position = 'absolute';
-                buttons.style.overflow = 'visible';
-
-                var bs = graph.getBorderSizes();
-                buttons.style.top = (container.offsetTop + bs.y) + 'px';
-                buttons.style.left = (container.offsetLeft + bs.x) + 'px';
-
-                var left = 0;
-                var bw = 16;
-                var bh = 16;
-
-                if (mxClient.IS_QUIRKS)
-                {
-                    bw -= 1;
-                    bh -= 1;
-                }
-
-                function addButton(label, funct)
-                {
-                    var btn = document.createElement('div');
-                    mxUtils.write(btn, label);
-                    btn.style.position = 'absolute';
-                    btn.style.backgroundColor = 'transparent';
-                    btn.style.border = '1px solid gray';
-                    btn.style.textAlign = 'center';
-                    btn.style.fontSize = '10px';
-                    btn.style.cursor = 'hand';
-                    btn.style.width = bw + 'px';
-                    btn.style.height = bh + 'px';
-                    btn.style.left = left + 'px';
-                    btn.style.top = '0px';
-
-                    mxEvent.addListener(btn, 'click', function(evt)
-                    {
-                        funct();
-                        mxEvent.consume(evt);
-                    });
-
-                    left += bw;
-
-                    buttons.appendChild(btn);
-                };
-
-                addButton('+', function()
-                {
-                    graph.zoomIn();
-                });
-
-                addButton('-', function()
-                {
-                    graph.zoomOut();
-                });
-
-                if (container.nextSibling != null)
-                {
-                    container.parentNode.insertBefore(buttons, container.nextSibling);
-                }
-                else
-                {
-                    container.appendChild(buttons);
-                }
-
             }
         };
     </script>
