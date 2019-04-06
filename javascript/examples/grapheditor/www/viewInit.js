@@ -35,7 +35,7 @@ function MyViewGraph(container,xmlStr)
 };
 
 //预先将Graph里的默认方法覆盖到mxgraph中
-var waitConvertMethodNames=["convertValueToString","isReplacePlaceholders","sanitizeHtml","getLinksForState"];
+var waitConvertMethodNames=["isReplacePlaceholders","sanitizeHtml","getLinksForState"];
 function convertGraphMethodToMx() {
     waitConvertMethodNames.forEach(function (methodName) {
         mxGraph.prototype[methodName]=Graph.prototype[methodName];
@@ -47,6 +47,43 @@ function convertGraphMethodToMx() {
         }
         return this.convertValueToString(cell)
     }
+    mxGraph.prototype["convertValueToString"]=diyConvertValueToString;
+
+
+}
+function diyConvertValueToString(cell)
+{
+    if(cell.value==undefined){
+        return "";
+    }
+
+    if (cell.value != null && typeof(cell.value) == 'object')
+    {
+        if (this.isReplacePlaceholders(cell) && cell.getAttribute('placeholder') != null)
+        {
+            var name = cell.getAttribute('placeholder');
+            var current = cell;
+            var result = null;
+
+            while (result == null && current != null)
+            {
+                if (current.value != null && typeof(current.value) == 'object')
+                {
+                    result = (current.hasAttribute(name)) ? ((current.getAttribute(name) != null) ?
+                        current.getAttribute(name) : '') : null;
+                }
+
+                current = this.model.getParent(current);
+            }
+
+            return result || '';
+        }
+        else
+        {
+            return cell.value.getAttribute('label') || '';
+        }
+    }
+
 }
 //重定义Tooltip父容器mxTooltip的样式
 mxTooltipHandler.prototype.init = function()

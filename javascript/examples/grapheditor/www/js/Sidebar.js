@@ -3609,16 +3609,18 @@ Sidebar.prototype.addDiyPalette = function(expand)
     var lineTags = 'line lines connector connectors connection connections arrow arrows ';
 
     var fns = [
+        this.createVertexTemplateEntry('triangle;whiteSpace=wrap;html=1;', 60, 80, '开始', '开始节点', null, null, 'triangle logic inverter buffer'),
 
-        this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', '节点', null, null, 'rounded rect rectangle box'),
-        this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;', 80, 80, '', 'Circle', null, null, '结束节点'),
+        this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 80, 40, '节点', '节点', null, null, 'rounded rect rectangle box'),
 
-        this.createVertexTemplateEntry('triangle;whiteSpace=wrap;html=1;', 60, 80, '', 'Triangle', null, null, 'triangle logic inverter buffer'),
+        this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;', 40, 40, '', 'Circle', null, null, ''),
+
+
         this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;', 80, 100, '', 'Note'),
 
         // this.createEdgeTemplateEntry('shape=link;html=1;', 50, 50, '', 'Link', null, lineTags + 'link'),
         // this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
-        // this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
+        this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
         // this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
         this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed')
     ];
