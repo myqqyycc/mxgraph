@@ -8,15 +8,16 @@
 <html>
 <head>
     <title>Codec example for mxGraph</title>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Sets the basepath for the library if not in same directory -->
     <script type="text/javascript">
         mxBasePath = '/page/src';
     </script>
+    <script type="text/javascript" src="/page/jquery/jquery-3.3.1.js"></script>
     <!-- Loads and initializes the library -->
     <script type="text/javascript" src="/page/src/js/mxClient.js"></script>
-    <script type="text/javascript" src="js/Graph.js"></script>
-    <script type="text/javascript" src="js/Shapes.js"></script>
+    <!--<script type="text/javascript" src="js/Graph.js"></script>-->
+    <!--<script type="text/javascript" src="js/Shapes.js"></script>-->
     <!-- Example code -->
     <script type="text/javascript">
         // Program starts here. Creates a sample graph in the
@@ -27,8 +28,8 @@
         {
             if (mxClient.isBrowserSupported())
             {
-                var xml = '<mxGraphModel dx="1634" dy="516" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.65;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="2" value="" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="140" y="240" width="60" height="80" as="geometry"/></mxCell><mxCell id="3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="520" y="360" width="80" height="80" as="geometry"/></mxCell></root></mxGraphModel>';
-                var xmlDocument = mxUtils.parseXml(xml);
+                var xml = '<mxGraphModel dx="1634" dy="183" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="3" value="三角形" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="140" y="200" width="60" height="80" as="geometry"/></mxCell><mxCell id="4" value="文本" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1"><mxGeometry x="400" y="220" width="80" height="100" as="geometry"/></mxCell><mxCell id="5" value="矩形" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="130" y="450" width="120" height="60" as="geometry"/></mxCell><mxCell id="6" value="圆形" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="540" y="460" width="80" height="80" as="geometry"/></mxCell></root></mxGraphModel>';
+                var xmlDocument = $.parseXML(xml);
                 var decoder = new mxCodec(xmlDocument);
                 var node = xmlDocument.documentElement;
                 graph = new mxGraph(container);
@@ -47,7 +48,9 @@
 
                 decoder.decode(node, graph.getModel());
                 graph.resizeContainer = false;
+
             }
+
         };
     </script>
 </head>
@@ -57,6 +60,23 @@
 <script type="text/javascript">
 
     main(document.getElementById("gggg"));
+    var defaultColors=['none', 'FFFFFF', 'E6E6E6', 'CCCCCC', 'B3B3B3', '999999', '808080', '666666', '4D4D4D', '333333', '1A1A1A', '000000', 'FFCCCC', 'FFE6CC', 'FFFFCC', 'E6FFCC', 'CCFFCC', 'CCFFE6', 'CCFFFF', 'CCE5FF', 'CCCCFF', 'E5CCFF', 'FFCCFF', 'FFCCE6',
+        'FF9999', 'FFCC99', 'FFFF99', 'CCFF99', '99FF99', '99FFCC', '99FFFF', '99CCFF', '9999FF', 'CC99FF', 'FF99FF', 'FF99CC', 'FF6666', 'FFB366', 'FFFF66', 'B3FF66', '66FF66', '66FFB3', '66FFFF', '66B2FF', '6666FF', 'B266FF', 'FF66FF', 'FF66B3', 'FF3333', 'FF9933', 'FFFF33',
+        '99FF33', '33FF33', '33FF99', '33FFFF', '3399FF', '3333FF', '9933FF', 'FF33FF', 'FF3399', 'FF0000', 'FF8000', 'FFFF00', '80FF00', '00FF00', '00FF80', '00FFFF', '007FFF', '0000FF', '7F00FF', 'FF00FF', 'FF0080', 'CC0000', 'CC6600', 'CCCC00', '66CC00', '00CC00', '00CC66',
+        '00CCCC', '0066CC', '0000CC', '6600CC', 'CC00CC', 'CC0066', '990000', '994C00', '999900', '4D9900', '009900', '00994D', '009999', '004C99', '000099', '4C0099', '990099', '99004D', '660000', '663300', '666600', '336600', '006600', '006633', '006666', '003366', '000066',
+        '330066', '660066', '660033', '330000', '331A00', '333300', '1A3300', '003300', '00331A', '003333', '001933', '000033', '190033', '330033', '33001A'];;
+    setInterval(function () {
+        mxUtils.setCellStyles(graph.getModel(), [graph.getModel().getCell(5)], "fillColor", getColor());
 
+        mxUtils.setCellStyles(graph.getModel(), [graph.getModel().getCell(6)], "strokeColor", getColor());
+
+    },3000)
+    function getColor() {
+        var color=defaultColors[Math.round(Math.random()*100%defaultColors.length)];
+        if(color!='none'){
+            return '#'+color;
+        }
+        return color;
+    }
 </script>
 </html>

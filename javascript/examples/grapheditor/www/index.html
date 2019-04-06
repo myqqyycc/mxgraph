@@ -103,6 +103,9 @@
         {
             document.body.innerHTML = '<center style="margin-top:10%;">Error loading resource files. Please check browser console.</center>';
         });
+        function print() {
+            console.log((new XMLSerializer()).serializeToString(editorUi.editor.getGraphXml()))
+        }
 	</script>
 </body>
 </html>
