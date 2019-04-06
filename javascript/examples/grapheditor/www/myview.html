@@ -1,10 +1,3 @@
-<!--
-  Copyright (c) 2006-2013, JGraph Ltd
-
-  Codec example for mxGraph. This example demonstrates dynamically
-  creating a graph from XML and encoding the model into XML, as well
-  as changing the default style for edges in-place.
--->
 <html>
 <head>
     <title>Codec example for mxGraph</title>
@@ -16,9 +9,27 @@
     <script type="text/javascript" src="/page/jquery/jquery-3.3.1.js"></script>
     <!-- Loads and initializes the library -->
     <script type="text/javascript" src="/page/src/js/mxClient.js"></script>
-    <!--<script type="text/javascript" src="js/Graph.js"></script>-->
+    <script type="text/javascript" src="sanitizer/sanitizer.min.js"></script>
+    <script type="text/javascript" src="viewInit.js"></script>
+    <script type="text/javascript" src="js/Graph.js"></script>
     <!--<script type="text/javascript" src="js/Shapes.js"></script>-->
     <!-- Example code -->
+    <style>
+        div.mxTooltip {
+            background: none;
+            padding:0px
+        }
+        div.mxTooltip table{
+            width: 100%;
+            padding: 5px;
+        }
+        div.mxTooltip table tr td:first-child{
+           text-align: right;
+        }
+        div.mxTooltip table tr td:nth-child(2){
+            text-align: left;
+        }
+    </style>
     <script type="text/javascript">
         // Program starts here. Creates a sample graph in the
         // DOM node with the specified ID. This function is invoked
@@ -28,26 +39,10 @@
         {
             if (mxClient.isBrowserSupported())
             {
-                var xml = '<mxGraphModel dx="1634" dy="183" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="3" value="三角形" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="140" y="200" width="60" height="80" as="geometry"/></mxCell><mxCell id="4" value="文本" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1"><mxGeometry x="400" y="220" width="80" height="100" as="geometry"/></mxCell><mxCell id="5" value="矩形" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="130" y="450" width="120" height="60" as="geometry"/></mxCell><mxCell id="6" value="圆形" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="540" y="460" width="80" height="80" as="geometry"/></mxCell></root></mxGraphModel>';
-                var xmlDocument = $.parseXML(xml);
-                var decoder = new mxCodec(xmlDocument);
-                var node = xmlDocument.documentElement;
-                graph = new mxGraph(container);
-                decoder.decode(mxUtils.load('/page/examples/grapheditor/www/styles/default.xml').getDocumentElement(), graph.getStylesheet());
+                var xml = '<mxGraphModel dx="1634" dy="221" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169"><root><mxCell id="0"/><mxCell id="1" parent="0"/><object label="" param="44" id="4"><mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></object><object label="vvvv是" param="222" id="2"><mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1"><mxGeometry x="160" y="150" width="120" height="60" as="geometry"/></mxCell></object><object label="" param="666" id="6"><mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3" target="5"><mxGeometry relative="1" as="geometry"/></mxCell></object><object label="vvvv是" param="33333" id="3"><mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="360" y="150" width="120" height="60" as="geometry"/></mxCell></object><object label="vvvv是" param="5555" id="5"><mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="560" y="150" width="120" height="60" as="geometry"/></mxCell></object></root></mxGraphModel>';
 
-                graph.centerZoom = false;
-                graph.setTooltips(false);
-                graph.setEnabled(false);
+                graph = new MyViewGraph(container,xml);
 
-                // Enables panning with left mouse button
-                graph.panningHandler.useLeftButtonForPanning = true;
-                graph.panningHandler.ignoreCell = true;
-                graph.container.style.cursor = 'move';
-                graph.setPanning(true);
-
-
-                decoder.decode(node, graph.getModel());
-                graph.resizeContainer = false;
 
             }
 
@@ -65,12 +60,25 @@
         '99FF33', '33FF33', '33FF99', '33FFFF', '3399FF', '3333FF', '9933FF', 'FF33FF', 'FF3399', 'FF0000', 'FF8000', 'FFFF00', '80FF00', '00FF00', '00FF80', '00FFFF', '007FFF', '0000FF', '7F00FF', 'FF00FF', 'FF0080', 'CC0000', 'CC6600', 'CCCC00', '66CC00', '00CC00', '00CC66',
         '00CCCC', '0066CC', '0000CC', '6600CC', 'CC00CC', 'CC0066', '990000', '994C00', '999900', '4D9900', '009900', '00994D', '009999', '004C99', '000099', '4C0099', '990099', '99004D', '660000', '663300', '666600', '336600', '006600', '006633', '006666', '003366', '000066',
         '330066', '660066', '660033', '330000', '331A00', '333300', '1A3300', '003300', '00331A', '003333', '001933', '000033', '190033', '330033', '33001A'];;
-    setInterval(function () {
-        mxUtils.setCellStyles(graph.getModel(), [graph.getModel().getCell(5)], "fillColor", getColor());
 
-        mxUtils.setCellStyles(graph.getModel(), [graph.getModel().getCell(6)], "strokeColor", getColor());
+    var default_tooltip_arr=[{name:"节点名",value:"label"},{name:"参数",value:"param"}];
+    mxConstants.SHAPE_TRIANGLE
+        graph.getChildCells().forEach(function (cell) {
 
-    },3000)
+            var cellInterval=setInterval(function () {
+                if(cell.isEdge()){
+                    mxUtils.setCellStyles(graph.getModel(), [cell], "strokeColor", getColor());
+                }else {
+                    mxUtils.setCellStyles(graph.getModel(), [cell], "fillColor", getColor());
+                }
+
+                initTooltipStr(cell,default_tooltip_arr);
+            },3000)
+        });
+
+
+
+//    graph.getModel().getCell(5).setTooltipContent("dddddd")
     function getColor() {
         var color=defaultColors[Math.round(Math.random()*100%defaultColors.length)];
         if(color!='none'){
@@ -78,5 +86,24 @@
         }
         return color;
     }
+    setInterval(function () {
+        if($(".mxTooltip").html()!=''){
+            console.log( $(".mxTooltip").html())
+        }
+    },1000)
+
+
+    function initTooltipStr(cell,arr){
+        var prefix="<table>";
+        var endStr="</table>",content="";
+        if(cell&&cell.value&&arr.length>0){
+            arr.forEach(function (obj) {
+                content+="<tr><td>" +obj.name+":</td><td>" +(cell.value.hasAttribute(obj.value)?cell.value.getAttribute(obj.value):"")+"</td></tr>"
+            })
+        }
+        return graph.setTooltipForCell(cell,prefix+content+endStr);
+    }
+
+
 </script>
 </html>

@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
+	<script type="text/javascript" src="/page/jquery/jquery-3.3.1.js"></script>
 	<script type="text/javascript">
 		// Parses URL parameters. Supported parameters are:
 		// - lang=xy: Specifies the language of the user interface.
@@ -99,6 +100,13 @@
 
             // Main
             editorUi=new EditorUi(new Editor(urlParams['chrome'] == '0', themes));
+
+            var xml = '<mxGraphModel dx="1634" dy="250" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169"><root><mxCell id="0"/><mxCell id="1" parent="0"/><object label="vvvv是" param="222" id="2"><mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="160" y="150" width="120" height="60" as="geometry"/></mxCell></object></root></mxGraphModel>';
+            var xmlDocument = $.parseXML(xml);
+            var decoder = new mxCodec(xmlDocument);
+            var node = xmlDocument.documentElement;
+            decoder.decode(node, editorUi.editor.graph.getModel());
+//            editorUi.editor.setGraphXml(xmlDocument.getElementsByTagName("mxGraphModel")[0])
         }, function()
         {
             document.body.innerHTML = '<center style="margin-top:10%;">Error loading resource files. Please check browser console.</center>';
