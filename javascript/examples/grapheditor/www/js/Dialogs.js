@@ -1733,6 +1733,33 @@ var EditDataDialog = function(ui, cell)
 	this.container = div;
 };
 
+var MyEditDataDialog = function(ui, cell,form)
+{
+	form=$(form).find("form").clone()[0];
+
+	//节点id
+    $(form).attr("cell_id",cell.getId())
+
+    $(form).find(".diyDataClass").each(function () {
+    	var aimKey=$(this).attr("aim_key");
+		var id=cell.getId();
+
+
+    	if(aimKey=="objId"){
+            $(this).val(getObjIdById(id))
+		}else {
+
+            $(this).val(Math.random())
+		}
+
+		console.log(this)
+    })
+
+$(form).show()
+
+    this.container = form;
+};
+
 /**
  * Optional help link.
  */

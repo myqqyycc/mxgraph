@@ -39,6 +39,7 @@
 		// Default resources are included in grapheditor resources
 		mxLoadResources = false;
 	</script>
+	<script type="text/javascript" src="indexDefault.js"></script>
 	<script type="text/javascript" src="js/Init.js"></script>
 	<script type="text/javascript" src="deflate/pako.min.js"></script>
 	<script type="text/javascript" src="deflate/base64.js"></script>
@@ -115,5 +116,15 @@
             console.log((new XMLSerializer()).serializeToString(editorUi.editor.getGraphXml()))
         }
 	</script>
+<div id="myEditId">
+	<form>
+		<table style="width: 100%">
+			<tr><td>objId</td><td><input type="text" class="diyDataClass" disabled aim_key="objId"></td></tr>
+			<tr><td>key1</td><td><input type="text" class="diyDataClass" aim_key="key1"></td></tr>
+			<tr><td>key2</td><td><input type="text" class="diyDataClass" aim_key="key2"></td></tr>
+			<tr><td colspan="2" style="text-align: center"><button class="geBtn gePrimaryBtn" onclick="saveForm(this)">保存</button><button class="geBtn" onclick="closeForm()">取消</button></td></tr>
+		</table>
+	</form>
+</div>
 </body>
 </html>

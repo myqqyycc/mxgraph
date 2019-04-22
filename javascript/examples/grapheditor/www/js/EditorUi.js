@@ -3706,6 +3706,17 @@ EditorUi.prototype.showDataDialog = function(cell)
 	}
 };
 
+EditorUi.prototype.showMyDataDialog = function(cell,form)
+{
+    if (cell != null&&form)
+    {
+        var dlg = new MyEditDataDialog(this, cell,form);
+        this.showDialog(dlg.container, 480, 420, true, false, null, false);
+        myEditorUi=this;
+        // dlg.init();
+    }
+};
+
 /**
  * Hides the current menu.
  */

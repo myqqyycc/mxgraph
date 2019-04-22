@@ -1310,6 +1310,11 @@ Actions.prototype.init = function()
     this.put("保存", new Action("保存", function() {
         alert((new XMLSerializer()).serializeToString(editorUi.editor.getGraphXml()));
     }, true, '', null));
+
+    this.put("myEdit", new Action("myEdit", function() {
+        var cell = graph.getSelectionCell() || graph.getModel().getRoot();
+        ui.showMyDataDialog(cell,document.getElementById("myEditId"));
+    }, true, '', null));
 };
 
 /**
