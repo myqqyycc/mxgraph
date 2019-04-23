@@ -31,6 +31,13 @@ function MyViewGraph(container,xmlStr)
 
     graph.setTooltipForCell=setTooltipForCell;
 
+    //子菜单是否自动展开
+    graph.popupMenuHandler.autoExpand = true;
+    // 生成菜单
+    graph.popupMenuHandler.factoryMethod = factoryMethod;
+    //禁用浏览器自带右键菜单
+    mxEvent.disableContextMenu(container);
+
     return graph
 };
 
@@ -143,3 +150,31 @@ var urlParams = (function(url)
 
     return result;
 })(window.location.href);
+
+function factoryMethod(menu, cell, evt) {
+    if(!cell){
+        return
+    }
+    menu.addItem('Item 1', null, function()
+    {
+        alert('Item 1');
+    });
+
+    menu.addItem('Item 2', null, function()
+    {
+        alert('Item 2');
+    });
+
+    menu.addSeparator();
+
+    var submenu1 = menu.addItem('Submenu 1', null, null);
+
+    menu.addItem('Subitem 1', null, function()
+    {
+        alert('Subitem 1');
+    }, submenu1);
+    menu.addItem('Subitem 1', null, function()
+    {
+        alert('Subitem 2');
+    }, submenu1);
+}
