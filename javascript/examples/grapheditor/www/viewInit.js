@@ -157,12 +157,12 @@ function factoryMethod(menu, cell, evt) {
     }
     menu.addItem('Item 1', null, function()
     {
-        alert('Item 1');
+        alert(cell.getId())
     });
 
     menu.addItem('Item 2', null, function()
     {
-        alert('Item 2');
+        alert('Item 2'+cell.getId());
     });
 
     menu.addSeparator();
